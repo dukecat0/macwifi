@@ -12,7 +12,7 @@ def get_wifi_info():
     process = subprocess.Popen([PATH_OF_AIRPORT, "-I"], stdout=subprocess.PIPE)
     out, err = process.communicate()
     process.wait()
-    print(out.decode("utf-8"))
+    return out.decode("utf-8")
 
 
 def get_ssid():
@@ -28,7 +28,7 @@ def get_ssid():
             value = value.strip()
             output[key] = value
 
-    print("SSID: " + output["SSID"])
+    return output["SSID"]
 
 
 def get_rssi():
@@ -44,7 +44,7 @@ def get_rssi():
             value = value.strip()
             output[key] = value
 
-    print("RSSI: " + output["agrCtlRSSI"])
+    return output["agrCtlRSSI"]
 
 
 def connect(ssid, password):
@@ -63,9 +63,9 @@ def connect(ssid, password):
     process.wait()
     result = out.decode("utf-8")
     if not result:
-        print("Successfully connected to " + ssid + ".")
+        return True
     elif "Could not find network" or "Failed to join network" in result:
-        print("Seems that the SSID or the password is incorrect. Please try again.")
+        raise Exception("Seems that the SSID or the password is incorrect.")
 
 
 def turn_on():
@@ -79,9 +79,9 @@ def turn_on():
     process.wait()
     result = out.decode("utf-8")
     if process.returncode == 0:
-        print("Successfully turned on the WiFi.")
+        return True
     else:
-        print("Failed to turn on the WiFi.")
+        raise Exception("Failed to turn on the WiFi.")
 
 
 def turn_off():
@@ -95,9 +95,9 @@ def turn_off():
     process.wait()
     result = out.decode("utf-8")
     if process.returncode == 0:
-        print("Successfully turned off the WiFi.")
+        return True
     else:
-        print("Failed to turn off the WiFi.")
+        raise Exception("Failed to turn off the WiFi.")
 
 
 def list():
@@ -107,4 +107,4 @@ def list():
     out, err = process.communicate()
     process.wait()
     result = out.decode("utf-8")
-    print(result)
+    return result
