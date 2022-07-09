@@ -70,7 +70,6 @@ def connect(ssid, password):
 
 def turn_on():
     """Turn on the WiFi."""
-    print("Turning on the WiFi...")
     process = subprocess.Popen(
         ["networksetup", "-setnetworkserviceenabled", "Wi-Fi", "on"],
         stdout=subprocess.PIPE,
@@ -86,7 +85,6 @@ def turn_on():
 
 def turn_off():
     """Turn off the WiFi."""
-    print("Turning off the WiFi...")
     process = subprocess.Popen(
         ["networksetup", "-setnetworkserviceenabled", "Wi-Fi", "off"],
         stdout=subprocess.PIPE,
@@ -102,7 +100,6 @@ def turn_off():
 
 def list():
     """List all available WiFi networks."""
-    print("Listing all available WiFi networks...")
     process = subprocess.Popen([PATH_OF_AIRPORT, "-s"], stdout=subprocess.PIPE)
     out, err = process.communicate()
     process.wait()
