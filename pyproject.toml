@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling>=0.15.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "macwifi"
+version = "0.0.5"
+description = "Macwifi is a Python module that helps you to manage the WiFi on macOS."
+authors = [
+    {name = "meowmeowcat", email = "meowmeowcat1211@gmail.com"},
+]
+dependencies = []
+requires-python = ">=3.7"
+readme = "README.md"
+license = {text = "MIT"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: MacOS",
+]
+
+[project.urls]
+"Source Code" = "https://github.com/meowmeowmeowcat/macwifi"
