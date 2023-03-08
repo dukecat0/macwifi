@@ -13,4 +13,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - run: pip install --user ruff
-    - run: ruff --format=github --ignore=E713,F403,F405,F841 --line-length=109 --target-version=py37 .
+    - run: ruff --format=github --ignore=F403,F405 --line-length=109 --target-version=py37 .
