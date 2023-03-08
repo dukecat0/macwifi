@@ -3,7 +3,7 @@ import sys
 
 PATH_OF_AIRPORT = "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport"
 
-if not "darwin" in sys.platform:
+if "darwin" not in sys.platform:
     raise Exception("macwifi only works on macOS.")
 
 
@@ -76,7 +76,7 @@ def turn_on():
     )
     out, err = process.communicate()
     process.wait()
-    result = out.decode("utf-8")
+    _ = out.decode("utf-8")
     if process.returncode == 0:
         return True
     else:
@@ -91,7 +91,7 @@ def turn_off():
     )
     out, err = process.communicate()
     process.wait()
-    result = out.decode("utf-8")
+    _ = out.decode("utf-8")
     if process.returncode == 0:
         return True
     else:
