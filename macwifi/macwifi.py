@@ -1,13 +1,17 @@
 import subprocess
 import sys
+from typing import Optional
 
-PATH_OF_AIRPORT = "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport"
+PATH_OF_AIRPORT: str = (
+    "/System/Library/PrivateFrameworks/"
+    "Apple80211.framework/Versions/Current/Resources/airport"
+)
 
 if "darwin" not in sys.platform:
     raise Exception("macwifi only works on macOS.")
 
 
-def get_wifi_info():
+def get_wifi_info() -> str:
     """Get the information about the connected WiFi."""
     process = subprocess.Popen([PATH_OF_AIRPORT, "-I"], stdout=subprocess.PIPE)
     out, err = process.communicate()
@@ -15,7 +19,7 @@ def get_wifi_info():
     return out.decode("utf-8")
 
 
-def get_ssid():
+def get_ssid() -> str:
     """Get the SSID of the connected WiFi."""
     process = subprocess.Popen([PATH_OF_AIRPORT, "-I"], stdout=subprocess.PIPE)
     out, err = process.communicate()
@@ -31,7 +35,7 @@ def get_ssid():
     return output["SSID"]
 
 
-def get_rssi():
+def get_rssi() -> str:
     """Get the signal strength of the connected WiFi."""
     process = subprocess.Popen([PATH_OF_AIRPORT, "-I"], stdout=subprocess.PIPE)
     out, err = process.communicate()
@@ -47,7 +51,7 @@ def get_rssi():
     return output["agrCtlRSSI"]
 
 
-def connect(ssid, password):
+def connect(ssid: str, password: str) -> Optional[bool]:
     """Connect to a WiFi network.
 
     Args:
@@ -65,10 +69,10 @@ def connect(ssid, password):
     if not result:
         return True
     elif "Could not find network" or "Failed to join network" in result:
-        raise Exception("Seems that the SSID or the password is incorrect.")
+        raise Exception("SSID or password may be incorrect.")
 
 
-def turn_on():
+def turn_on() -> Optional[bool]:
     """Turn on the WiFi."""
     process = subprocess.Popen(
         ["networksetup", "-setnetworkserviceenabled", "Wi-Fi", "on"],
@@ -83,7 +87,7 @@ def turn_on():
         raise Exception("Failed to turn on the WiFi.")
 
 
-def turn_off():
+def turn_off() -> Optional[bool]:
     """Turn off the WiFi."""
     process = subprocess.Popen(
         ["networksetup", "-setnetworkserviceenabled", "Wi-Fi", "off"],
@@ -98,7 +102,7 @@ def turn_off():
         raise Exception("Failed to turn off the WiFi.")
 
 
-def list():
+def list() -> str:
     """List all available WiFi networks."""
     process = subprocess.Popen([PATH_OF_AIRPORT, "-s"], stdout=subprocess.PIPE)
     out, err = process.communicate()
